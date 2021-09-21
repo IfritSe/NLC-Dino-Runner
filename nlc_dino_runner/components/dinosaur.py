@@ -1,4 +1,5 @@
 import pygame
+from nlc_dino_runner.components.text_utils import get_centered_message
 from pygame.sprite import Sprite
 from nlc_dino_runner.utils.constants import \
     RUNNING, \
@@ -94,9 +95,18 @@ class Dinosaur(Sprite):
 
     def check_invincibility(self, screen):
         if self.shield:
-            time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/1000, 3)
-            if time_to_show >= 0:
-                self.show_text
+            time_to_show = round((self.shield_time_up - pygame.time.get_ticks())/1000, 1)
+            if time_to_show < 0:
+                self.shield = False
+                if self.type == SHIELD_TYPE:
+                    self.type = DEFAULT_TYPE
+            else:
+                if self.show_text:
+                    text, text_rect = get_centered_message("Shield enabled for: " + str(time_to_show),
+                                                           width=550,
+                                                           height=100,
+                                                           )
+                    screen.blit(text, text_rect)
 
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
