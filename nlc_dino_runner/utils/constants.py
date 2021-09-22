@@ -5,6 +5,7 @@ import os
 TITLE = "Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
+HEARTS_COUNTER = 5
 FPS = 60
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
