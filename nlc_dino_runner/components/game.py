@@ -14,7 +14,7 @@ class Game:
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
         self.clock = pygame.time.Clock()
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.playing = False
         self.x_pos_bg = 0
         self.y_pos_bg = 360
@@ -30,7 +30,7 @@ class Game:
     def run(self):
         self.obstacle_manager.reset_obstacles()
         self.points = 0
-        self.power_up_manager.reset_power_ups(self.points)
+        self.power_up_manager.reset_power_ups(self.points, self.player)
         self.hearts_manager.reset_counter_hearts()
         self.playing = True
         while self.playing:
@@ -48,6 +48,8 @@ class Game:
         self.player.update(user_input)
         self.obstacle_manager.update(self)
         self.power_up_manager.update(self.points, self.game_speed, self.player)
+        if self.player.throwing_hammer:
+            self.player.hammer_throwed.update_hammer(self.player)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -58,6 +60,10 @@ class Game:
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
         self.hearts_manager.draw(self.screen)
+        if self.player.throwing_hammer:
+            self.player.hammer_throwed.draw_hammer(self.screen)
+            self.player.check_hammer(self.screen)
+
         pygame.display.update()
         pygame.display.flip()
 

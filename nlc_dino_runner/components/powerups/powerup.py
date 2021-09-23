@@ -1,6 +1,6 @@
 import random
 
-from pygame.sprite import  Sprite
+from pygame.sprite import Sprite
 
 
 from nlc_dino_runner.utils.constants import SCREEN_HEIGHT
@@ -22,5 +22,4 @@ class PowerUp(Sprite):
         self.rect.x -= game_speed
         if self.rect.x < -self.rect.width:
             powerups.pop()
-
 
